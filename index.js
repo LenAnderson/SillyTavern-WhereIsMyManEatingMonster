@@ -1,7 +1,7 @@
 import { chat, event_types, eventSource, getRequestHeaders } from '../../../../script.js';
 import { SlashCommand } from '../../../slash-commands/SlashCommand.js';
 import { SlashCommandParser } from '../../../slash-commands/SlashCommandParser.js';
-import { delay, uuidv4 } from '../../../utils.js';
+import { debounce, delay, uuidv4 } from '../../../utils.js';
 
 
 let isWaiting = false;
@@ -53,11 +53,12 @@ const waitLoop = async(force = false)=>{
         await delay(1000 * 60);
     }
 };
+const waitLoopDebounced = debounce(waitLoop, 1000);
 const init = async()=>{
     eventSource.on(event_types.CHARACTER_MESSAGE_RENDERED, ()=>{
         if (/proxy.+error/i.test(chat.at(-1).mes)) {
             isWaiting = true;
-            waitLoop(true);
+            waitLoopDebounced(true);
         }
     });
 };
@@ -67,7 +68,7 @@ init();
 SlashCommandParser.addCommandObject(SlashCommand.fromProps({ name: 'lookforthemonster',
     callback: (args, value)=>{
         isWaiting = true;
-        waitLoop(true);
+        waitLoopDebounced(true);
         return '';
     },
     helpString: 'Try to find the man eating monster.',
