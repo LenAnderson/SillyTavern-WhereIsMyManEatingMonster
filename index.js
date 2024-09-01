@@ -2,6 +2,7 @@ import { chat, event_types, eventSource, getRequestHeaders } from '../../../../s
 import { SlashCommand } from '../../../slash-commands/SlashCommand.js';
 import { SlashCommandParser } from '../../../slash-commands/SlashCommandParser.js';
 import { debounce, delay, uuidv4 } from '../../../utils.js';
+import { didYouKnow } from './didYouKnow.js';
 
 
 let isWaiting = false;
@@ -44,9 +45,10 @@ const waitLoop = async(force = false)=>{
                         new Notification('Scylla is back!');
                     });
                 } else {
-                    toastr.info('I can\'t find the man eating monster...', null, { timeOut: 1000 * 1 });
+                    toastr.info(didYouKnow(), 'I can\'t find the man eating monster...');
                 }
-            } catch {
+            } catch (ex) {
+                console.warn(ex);
                 toastr.warning('I don\'t even know where to look for a man eating monster...', null, { timeOut: 1000 * 1 });
             }
         }
