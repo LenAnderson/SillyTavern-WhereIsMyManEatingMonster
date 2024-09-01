@@ -43,19 +43,6 @@ const waitLoop = async(force = false)=>{
                     Notification.requestPermission().then(()=>{
                         new Notification('Scylla is back!');
                     });
-                    // const sfxResponse = await fetch('/scripts/extensions/third-party/SillyTavern-WhereIsMyManEatingMonster/sfx/back.ogg', { headers: { responseType: 'arraybuffer' } });
-                    // if (!sfxResponse.ok) {
-                    //     // no sound for you...
-                    //     continue;
-                    // }
-                    // const con = new AudioContext();
-                    // const src = con.createBufferSource();
-                    // src.buffer = await con.decodeAudioData(await sfxResponse.arrayBuffer());
-                    // const volume = con.createGain();
-                    // volume.gain.value = 1;
-                    // volume.connect(con.destination);
-                    // src.connect(volume);
-                    // src.start();
                 } else {
                     toastr.info('I can\'t find the man eating monster...', null, { timeOut: 1000 * 1 });
                 }
