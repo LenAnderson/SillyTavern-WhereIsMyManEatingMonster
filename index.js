@@ -10,10 +10,13 @@ let isLooping = true;
 let loopId;
 const waitLoop = async(force = false)=>{
     if (!force && isLooping) return;
-    const myLoopid = uuidv4();
-    loopId = myLoopid;
+    console.log('[__MONSTER__]', 'calling waitLoop', { force, isLooping }, new Error().stack);
+    const myLoopId = uuidv4();
+    loopId = myLoopId;
     while (true) {
-        if (myLoopid != loopId) return;
+        console.log('[__MONSTER__]', 'looping waitLoop', { myLoopid: myLoopId, loopId, isWaiting, isLooping }, new Error().stack);
+        if (myLoopId != loopId || !isWaiting) return;
+        console.log('[__MONSTER__]', '...doing the loop', myLoopId);
         if (isWaiting) {
             try {
                 const fn = uuidv4();
@@ -38,6 +41,7 @@ const waitLoop = async(force = false)=>{
                         category: 'ambient',
                     }),
                 });
+                console.log('[__MONSTER__]', 'got the reponse', { data, myLoopid: myLoopId, loopId, isWaiting, isLooping }, new Error().stack);
                 if (data.claude?.activeKeys ?? 0) {
                     isWaiting = false;
                     toastr.success('Found the man eating monster!', 'Sylla is back!', { timeOut:0 });
