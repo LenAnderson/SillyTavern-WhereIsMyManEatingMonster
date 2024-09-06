@@ -44,7 +44,7 @@ const waitLoop = async(force = false)=>{
                 console.log('[__MONSTER__]', 'got the reponse', { data, myLoopid: myLoopId, loopId, isWaiting, isLooping }, new Error().stack);
                 if (data.claude?.activeKeys ?? 0) {
                     isWaiting = false;
-                    toastr.success('Found the man eating monster!', 'Sylla is back!', { timeOut:0 });
+                    toastr.success('Found the man eating monster!', 'Scylla is back!', { timeOut:0 });
                     Notification.requestPermission().then(()=>{
                         new Notification('Scylla is back!');
                     });
